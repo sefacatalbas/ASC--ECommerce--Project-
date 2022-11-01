@@ -1,0 +1,153 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %} 
+
+     <!-- Sayfa Başlığı -->
+     <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">Alışverişi Tamamla</h1>
+        </div>
+    </div>
+    <!-- Sayfa Başlığı Bitişi -->
+
+
+    <!-- Ödeme Bölümü -->
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5">
+            <div class="col-lg-8">
+                <div class="mb-4">
+                    <h4 class="font-weight-semi-bold mb-4">Fatura Adresi</h4>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Ad</label>
+                            <input class="form-control" type="text" placeholder="Sefa">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Soyad</label>
+                            <input class="form-control" type="text" placeholder="Çatalbaş">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>E-mail</label>
+                            <input class="form-control" type="text" placeholder="sefacatalbas1@gmail.com">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>GSM</label>
+                            <input class="form-control" type="text" placeholder="+90 537 526 0000">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Adres</label>
+                            <input class="form-control" type="text" placeholder="Kirazlı Mahallesi">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Semt</label>
+                            <input class="form-control" type="text" placeholder="Kuyudibi">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Ülke</label>
+                            <select class="custom-select">
+                                <option selected>Türkiye</option>
+                                <option>Suriye</option>
+                                <option>Yunanistan</option>
+                                <option>Azerbaycan</option>
+                                <option>Irak</option>
+                                <option>İran</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Şehir</label>
+                            <input class="form-control" type="text" placeholder="Sakarya">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>İlçe</label>
+                            <input class="form-control" type="text" placeholder="Adapazarı">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Posta Kodu</label>
+                            <input class="form-control" type="text" placeholder="54100">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="newaccount">
+                                <label class="custom-control-label" for="newaccount">Hesap oluştur</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="shipto">
+                                <label class="custom-control-label" for="shipto"  data-toggle="collapse" data-target="#shipping-address">Farklı adrese gönder</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-secondary mb-5">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Sipariş Toplamı</h4>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="font-weight-medium mb-3">Ürünler</h5>
+                        <div class="d-flex justify-content-between">
+                            <p>Ürünler X</p>
+                            <p>150.00₺</p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Ürünler Y</p>
+                            <p>250.00₺</p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Ürünler Z</p>
+                            <p>450.00₺</p>
+                        </div>
+                        <hr class="mt-0">
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Ara Toplam</h6>
+                            <h6 class="font-weight-medium">850.00₺</h6>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium">Kargo Ücreti</h6>
+                            <del>₺50.00</del>
+                            <h6 class="font-weight-medium">0.00₺</h6>
+                        </div>
+                    </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5 class="font-weight-bold">Toplam</h5>
+                            <h5 class="font-weight-bold">850.00₺</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-secondary mb-5">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Ödeme Türü</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" name="payment" id="paypal">
+                                <label class="custom-control-label" for="paypal">Kredi Kartı</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" name="payment" id="directcheck">
+                                <label class="custom-control-label" for="directcheck">Fast Pay</label>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
+                                <label class="custom-control-label" for="banktransfer">Banka Havale / Eft</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                        <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Sipariş Ver</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Checkout End -->
+
+{% endblock content %} 

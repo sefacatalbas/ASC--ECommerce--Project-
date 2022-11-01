@@ -1,0 +1,617 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.S.C</title>
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Stylesheet Kütüp. -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Topbar -->
+    <div class="container-fluid">
+        <div class="row bg-secondary py-2 px-xl-5">
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark" href="">S.S.S</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="">Yardım</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="">Destek</a>
+                </div>
+            </div>
+           
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-dark px-2" href="https://tr.linkedin.com/in/sefacatalbas">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-dark px-2" href="https://instagram.com/in/ascatalbas">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-dark pl-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center py-3 px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a href="{% url 'index' %}" class="text-decoration-none">
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">AS</span>трговину</h1>
+                </a>
+            </div>
+            <div class="col-lg-6 col-6 text-left">
+                <form action="">
+                    <div class="input-group ml-2">
+                        <input type="text" class="form-control" placeholder="İstediğiniz ürünü arayın..">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-transparent text-primary">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% if user.is_authenticated %}
+                <a class="nav-link active ml-4" href="{% url 'register' %}">
+            <button class="account-user bg-success">{{request.user}}</button>
+                </a>
+                <a class="nav-link" href="{% url 'logout' %}">
+            <button class="login btn-info">Çıkış</button>
+                </a>
+            {% else %}
+                <a class="nav-link active ml-4" aria-current="page" href="{% url 'register' %}">
+            <button class="register bg-primary">Üye Ol</button>
+                </a>
+                <a class="nav-link" href="{% url 'login' %}">
+            <button class="login bg-primary">Üye Girişi</button>
+                </a>
+           
+        {% endif %}
+            </div>
+    </div>
+    <!-- Topbar Bitişi -->
+
+    {% if messages %}
+    {% for mesaj in messages %}
+    <div class="alert alert-{{mesaj.tags}} text-center" role="alert">  <!--Mesaj dinamik olsun diye mesaj.tags kullandık--->
+    {{mesaj}}
+    </div>
+    {% endfor %}
+    {% else %}
+    {% endif %}
+    <!-- Navbar -->
+    <div class="container-fluid mb-5">
+        <div class="row border-top px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
+                    <h6 class="m-0">Kategoriler</h6>
+                    <i class="fa fa-angle-down text-dark"></i>
+                </a>
+                <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
+                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link" data-toggle="dropdown">Elbiseler<i class="fa fa-angle-down float-right mt-1"></i></a>
+                            {% for kategori in kategoriler %}
+                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                            <a href=" {% url 'index' %}?search={{kategori.isim}}" class="nav-item nav-link"> {{kategori.isim}}</a>  
+                            </div>
+                            {% endfor %}
+                        </div>
+                         
+                    </div>
+                </nav>
+            </div>
+            <div class="col-lg-9">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <a href="" class="text-decoration-none d-block d-lg-none">
+                        <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Ticaret</h1>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a href="{% url 'index' %}" class="nav-item nav-link active">Anasayfa</a>
+                            <a href="{% url 'shop' %}" class="nav-item nav-link">Alışveriş</a>
+
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sayfalar</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <a href="{% url 'cart' %}" class="dropdown-item">Alışveriş Sepeti</a>
+                                    <a href="{% url 'checkout' %}" class="dropdown-item">Ödeme</a>
+                                </div>
+                            </div>
+                            <a href="{% url 'contact' %}" class="nav-item nav-link">İletişim</a>
+                        </div>
+                    <div class="col-lg-3 col-6 text-right mr-5">
+                        <a href="" class="btn border">
+                            <i class="fas fa-heart text-primary"></i>
+                            <span class="badge">10</span>
+                        </a>
+                        <a href="{% url 'cart' %}" class="btn border ml-4">
+                            <i class="fas fa-shopping-cart text-primary"></i>
+                            <span class="badge">Sepet</span>
+                        </a>
+                    </div>
+                </nav>
+
+                <div id="header-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" style="height: 410px;">
+                            <img class="img-fluid" src="{% static 'img/carousel-1.jpg' %}" alt="Image">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">İlk Siparişinizde %10 İndirim</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">En moda elbiseler</h3>
+                                    <a href="{% url 'shop' %}" class="btn btn-light py-2 px-3">Şimdi satın al</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" style="height: 410px;">
+                            <img class="img-fluid" src="{% static 'img/carousel-2.jpg' %}" alt="Image">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">İlk Siparişinizde %10 İndirim</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">En iyi fiyat</h3>
+                                    <a href="{% url 'shop' %}" class="btn btn-light py-2 px-3">Şimdi satın al</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-prev-icon mb-n2"></span>
+                        </div>
+                    </a>
+                    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-next-icon mb-n2"></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar Bitişi -->
+    {% block content %} 
+    
+    <!-- Öne Çıkan Reklam Böl. -->
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5 pb-3">
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+                    <h5 class="font-weight-semi-bold m-0">Kaliteli Ürün</h5>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+                    <h5 class="font-weight-semi-bold m-0">Ücretsiz Kargo</h5>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+                    <h5 class="font-weight-semi-bold m-0">14-Günde Geri İade</h5>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+                    <h5 class="font-weight-semi-bold m-0">7/24 Destek</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Öne Çıkan Reklam Bitişi -->
+
+   
+    <!-- Kategori -->
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5 pb-3">
+            <div class="col-lg-4 col-md-6 pb-1">
+                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                    <p class="text-right">15 Ürün</p>
+                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                        <img class="img-fluid" src="{% static 'img/cat-1.jpg' %}" alt="">
+                    </a>
+                    <h5 class="font-weight-semi-bold m-0">Erkek</h5>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                    <p class="text-right">15 Ürün</p>
+                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                        <img class="img-fluid" src="{% static 'img/cat-2.jpg' %}" alt="">
+                    </a>
+                    <h5 class="font-weight-semi-bold m-0">Kadın</h5>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                    <p class="text-right">15 Ürün</p>
+                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                        <img class="img-fluid" src="{% static 'img/cat-3.jpg' %}" alt="">
+                    </a>
+                    <h5 class="font-weight-semi-bold m-0">Bebek</h5>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                    <p class="text-right">15 Ürün</p>
+                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                        <img class="img-fluid" src="{% static 'img/cat-4.jpg' %}" alt="">
+                    </a>
+                    <h5 class="font-weight-semi-bold m-0">Aksesuarlar</h5>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                    <p class="text-right">15 Ürün</p>
+                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                        <img class="img-fluid" src="{% static 'img/cat-5.jpg' %}" alt="">
+                    </a>
+                    <h5 class="font-weight-semi-bold m-0">Çantalar</h5>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                    <p class="text-right">15 Ürün</p>
+                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                        <img class="img-fluid" src="{% static 'img/cat-6.jpg' %}" alt="">
+                    </a>
+                    <h5 class="font-weight-semi-bold m-0">Ayakkabılar</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Kategori Bitişi -->
+
+
+    <!-- Teklif Bölümü -->
+    <div class="container-fluid offer pt-5">
+        <div class="row px-xl-5">
+            <div class="col-md-6 pb-4">
+                <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5">
+                    <img src="{% static 'img/offer-1.png' %}" alt="">
+                    <div class="position-relative" style="z-index: 1;">
+                        <h5 class="text-uppercase text-primary mb-3">Tüm siparişte %20 indirim</h5>
+                        <h1 class="mb-4 font-weight-semi-bold">Bahar Koleksiyonları</h1>
+                        <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Satın al</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 pb-4">
+                <div class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-5 px-5">
+                    <img src="{% static 'img/offer-2.png' %}" alt="">
+                    <div class="position-relative" style="z-index: 1;">
+                        <h5 class="text-uppercase text-primary mb-3">Tüm siparişte %20 indirim</h5>
+                        <h1 class="mb-4 font-weight-semi-bold">Kış Koleksiyonları</h1>
+                        <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Satın al</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Teklif Bölümü Bitişi -->
+
+
+    <!-- Ürünler -->
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Trend Ürünler</span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3">
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" src="{% static 'img/product-1.jpg' %}" alt="">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">Beyaz Şık Abiye</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>323.00₺</h6><h6 class="text-muted ml-2"><del>423.00₺</del></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ayrıntılar</a>
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Sepete Ekle</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" src="{% static 'img/product-2.jpg' %}" alt="">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">Çocuk Kot Ceket</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>323.00₺</h6><h6 class="text-muted ml-2"><del>423.00₺</del></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ayrıntılar</a>
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Sepete Ekle</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" src="{% static 'img/product-3.jpg' %}" alt="">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">Deri Ceket</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>₺323.00</h6><h6 class="text-muted ml-2"><del>₺423.00</del></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ayrıntılar</a>
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Sepete Ekle</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" src="{% static 'img/product-4.jpg' %}" alt="">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">Beyaz Şık Abiye</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>₺323.00</h6><h6 class="text-muted ml-2"><del>₺423.00</del></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ayrıntılar</a>
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Sepete Ekle</a>
+                    </div>
+                </div>
+            </div>    
+    <!-- Ürünler Bitişi -->
+
+
+    <!-- Abone Ol Bölümü -->
+    <div class="container-fluid bg-secondary my-5">
+        <div class="row justify-content-md-center py-5 px-xl-5">
+            <div class="col-md-6 col-12 py-5">
+                <div class="text-center mb-2 pb-2">
+                    <h2 class="section-title px-5 mb-3"><span class="bg-secondary px-2">Hep Güncel Kal</span></h2>
+                    <p>Bize abone olun.. Yenilikleri ve tüm fırsat ürünleri kaçırmayın.</p>
+                </div>
+                <form action="">
+                    <div class="input-group">
+                        <input type="text" class="form-control border-white p-4" placeholder="E-posta
+                        ">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary text-light px-4"><a href="{% url 'register' %}" class="text-decoration-none text-light">Abone Ol</a></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Abone Ol Bölümü Bitişi -->
+
+
+    <!-- ÜrünlerII -->
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" src="{% static 'img/product-5.jpg' %}" alt="">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">Çocuk T-Shirt</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>₺323.00</h6><h6 class="text-muted ml-2"><del>₺423.00</del></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ayrıntılar</a>
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Sepete Ekle</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" src="{% static 'img/product-6.jpg' %}" alt="">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">Takım Elbise</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>₺323.00</h6><h6 class="text-muted ml-2"><del>₺423.00</del></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ayrıntılar</a>
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Sepete Ekle</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" src="{% static 'img/product-7.jpg' %}" alt="">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">Kadın Trençkot</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>₺323.00</h6><h6 class="text-muted ml-2"><del>₺423.00</del></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ayrıntılar</a>
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Sepete Ekle</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" src="{% static 'img/product-8.jpg' %}" alt="">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">Çocuk Gömlek</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>₺323.00</h6><h6 class="text-muted ml-2"><del>₺423.00</del></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Ayrıntılar</a>
+                        <a href="{% url 'pay' %}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Sepete Ekle</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Ürünler II Sonu -->
+
+{% endblock content %}
+    <!-- Footer -->
+    <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+        <div class="row px-xl-5 pt-5">
+            <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+                <a href="" class="text-decoration-none">
+                    <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">AS</span>трговину</h1>
+                </a>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint perspiciatis praesentium ratione nesciunt quos dolores.</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Kirazlı Mah. 54 Sokak, Sakarya, Türkiye</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@asc.com</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+090 537 5260000</p>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-8 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">Hızlı Linkler</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-dark mb-2" href="{% url 'index' %}"><i class="fa fa-angle-right mr-2"></i>Anasayfa</a>
+                            <a class="text-dark mb-2" href="{% url 'shop' %}"><i class="fa fa-angle-right mr-2"></i>Alışveriş</a>
+                            <a class="text-dark mb-2" href="{% url 'detail' %}"><i class="fa fa-angle-right mr-2"></i>Mağaza Detayı</a>
+                            <a class="text-dark mb-2" href="{% url 'cart' %}"><i class="fa fa-angle-right mr-2"></i>Sayfalar</a>
+                            <a class="text-dark mb-2" href="{% url 'checkout' %}"><i class="fa fa-angle-right mr-2"></i>Ödeme</a>
+                            <a class="text-dark" href="{% url 'contact' %}"><i class="fa fa-angle-right mr-2"></i>İletişim</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">Bülten</h5>
+                        <form action="">
+                            <div class="form-group">
+                                <input type="text" class="form-control border-0 py-4" placeholder="Ad-Soyad" required="required" />
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control border-0 py-4" placeholder="Email"
+                                    required="required" />
+                            </div>
+                            <div>
+                                <button class="btn btn-primary btn-block border-0 py-3" type="submit">
+                                    <a href="{% url 'register' %}" class="text-decoration-none text-light">Şimdi Abone Ol</a></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row border-top border-light mx-xl-5 py-4">
+            <div class="col-md-6 px-xl-0">
+                <p class="mb-md-0 text-center text-md-left text-dark">
+                    &copy; <a class="text-dark font-weight-semi-bold" href="#">AS-трговину</a>. Alla rättigheter förbehållna
+                    by Ahmet Sefa Çatalbaş
+                </p>
+            </div>
+            <div class="col-md-6 px-xl-0 text-center text-md-right">
+                <img class="img-fluid" src="{% static 'img/payments.png' %}" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- Footer Bitişi -->
+
+    
+    <!-- Başa Dönme Çubuğu -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Kütüphane -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Javascript Dosyaları -->
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+
+    <!-- Javascript -->
+    <script src="js/main.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+    <script src='js/firebaseConfig.js'></script>
+    <script src='js/userInfo.js'></script>
+    <script src='js/cart.js'></script>
+    <script>
+    let checkout = document.getElementById('checkout');
+      let cart = document.getElementById('cart');
+  
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+      firebase.database().ref('cart/' + user.uid).on('value', snap => {
+        if(document.getElementById('checkoutRow') != null){
+          document.getElementById('checkoutRow').parentNode.removeChild(document.getElementById('checkoutRow'));
+        }
+        buildProceedToCheckOut(snap, checkout);
+      });
+      //user logs in
+      firebase.database().ref('cart/' + user.uid).on('child_added', snap => {
+        buildCartProducts(snap, cart);
+      });
+  
+        }else {
+          //user logs out
+          if(document.getElementById('checkoutRow') != null){
+            document.getElementById('checkoutRow').parentNode.removeChild(document.getElementById('checkoutRow'));
+          }
+  
+          let items = document.getElementsByClassName('item');
+          if(items[items.length - 1]){
+            for(let i = 0; i < items.length; i++){
+              items[i].parentNode.removeChild(items[i]);
+            }
+          }
+          buildLoginBtn(cart, 'auth.html?auth=login');
+        }
+      });
+    </script>
+
+</body>
+
+</html>

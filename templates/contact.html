@@ -1,0 +1,73 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %} 
+    <!-- Sayfa Başlığı  -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">İletişim</h1>
+        </div>
+    </div>
+    <!-- Sayfa Başlığı Bitişi -->
+
+
+    <!-- İletişim Bölümü -->
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Sorularınız İçin İletişime Geçin</span></h2>
+        </div>
+        <br>
+        <div class="row px-xl-5">
+            <div class="col-lg-7 mb-5">
+                <div class="contact-form">
+                    <div id="success"></div>
+                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                        <div class="control-group">
+                            <input type="text" class="form-control" id="name" placeholder="Ad-Soyad"
+                                required="required" data-validation-required-message="Lütfen adınızı girin." />
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <input type="email" class="form-control" id="email" placeholder="Email"
+                                required="required" data-validation-required-message="Lütfen emailinizi girin." />
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <input type="text" class="form-control" id="subject" placeholder="Konu"
+                                required="required" data-validation-required-message="Lütfen konu başlığı giriniz." />
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <textarea class="form-control" rows="6" id="message" placeholder="Mesajınız"
+                                required="required"
+                                data-validation-required-message="Lütfen mesajınızı belirtin."></textarea>
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Gönder</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-5 mb-5">
+                <h5 class="font-weight-semi-bold mb-3">Mağazalarımız</h5>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi, vero.</p>
+                <div class="d-flex flex-column mb-3">
+                    <h5 class="font-weight-semi-bold mb-3">Şube X</h5>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Kirazlı Mah. 54 Sokak, Sakarya, Türkiye</p>
+                    <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@asc.com</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>+090 537 5260000</p>
+                </div>
+                <div class="d-flex flex-column">
+                    <h5 class="font-weight-semi-bold mb-3">Şube Y</h5>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Kirazlı Mah. 54 Sokak, Sakarya, Türkiye</p>
+                    <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@asc.com</p>
+                    <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+090 537 5260000</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+
+{% endblock content %}  
+
+    
